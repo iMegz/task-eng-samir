@@ -2,13 +2,17 @@ const db = require("../config/db");
 
 exports.getItems = async (req, res, next) => {
   const page = req.query.p;
-  const items = await db.item.findMany({
-    take: 3,
-    skip: (page - 1) * 3,
-    include: { brand: true },
-  });
+  try {
+    const items = await db.item.findMany({
+      take: 3,
+      skip: (page - 1) * 3,
+      include: { brand: true },
+    });
 
-  res.json(items);
+    res.json(items);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.count = async (req, res, next) => {
