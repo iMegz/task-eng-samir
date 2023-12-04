@@ -1,5 +1,3 @@
-const { PrismaClient } = require("@prisma/client");
-
 exports.getItems = async (req, res, next) => {
   const page = req.query.p;
 
@@ -25,13 +23,13 @@ exports.createItem = async (req, res, next) => {
 
 exports.editPrice = async (req, res, next) => {
   /**
-   * @type {ChangePrice[]}
+   * @type {Change[]}
    */
   const changes = req.body;
   const modifiedItem = await req.db.$transaction(
     changes.map((change) => {
       return req.db.item.update({
-        data: { price: +change.newValue },
+        data: { price: +change.price, brandId: +change.brandId },
         where: { id: +change.id },
       });
     })
@@ -40,8 +38,8 @@ exports.editPrice = async (req, res, next) => {
 };
 
 /**
- * @typedef {Object} ChangePrice
+ * @typedef {Object} Change
  * @property {string} id - The identifier.
- * @property {string} oldValue - The old value.
- * @property {string} newValue - The new value.
+ * @property {string} price - The new price
+ * @property {string} brandId - The new brand
  */
