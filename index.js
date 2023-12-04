@@ -17,4 +17,8 @@ app.use(express.static(join(__dirname, "public")));
 
 app.use("/api", router);
 
+app.use((error, req, res, next) => {
+  res.status(err.status || 500).json({ error });
+});
+
 app.listen(process.env.PORT || 4000, () => console.log("Server started"));
