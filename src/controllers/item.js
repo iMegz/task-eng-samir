@@ -4,7 +4,7 @@ exports.getItems = async (req, res, next) => {
   const items = await req.db.item.findMany({
     take: 3,
     skip: (page - 1) * 3,
-    include: { brand: { select: { name: true } } },
+    include: { brand: true },
   });
 
   res.json(items);
