@@ -30,7 +30,7 @@ exports.editPrice = async (req, res, next) => {
   const changes = req.body;
   const modifiedItem = await req.db.$transaction(
     changes.map((change) => {
-      return db.item.update({
+      return req.db.item.update({
         data: { price: +change.newValue },
         where: { id: +change.id },
       });
