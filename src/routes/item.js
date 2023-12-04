@@ -13,6 +13,6 @@ router.get("/count", count);
 
 router.post("/", createItem);
 
-router.patch("/:id", editPrice);
+router.patch("/", editPrice);
 
 module.exports = router;

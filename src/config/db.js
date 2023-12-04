@@ -4,6 +4,9 @@ const prismaClientSingleton = () => {
   return new PrismaClient();
 };
 
+/**
+ * @type {PrismaClient}
+ */
 const prisma = globalThis.prisma ?? prismaClientSingleton();
 
 module.exports = prisma;

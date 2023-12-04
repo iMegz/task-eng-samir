@@ -11,10 +11,17 @@ datasource db {
 }
 
 model Item {
-  id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(10)
-  brand String  @db.VarChar(10)
-  model String  @db.VarChar(10)
-  color String  @db.VarChar(10)
-  price Decimal @db.Decimal(12, 2)
+  id      Int     @id @default(autoincrement())
+  name    String  @db.VarChar(10)
+  brand   Brand   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  model   String  @db.VarChar(10)
+  color   String  @db.VarChar(10)
+  price   Decimal @db.Decimal(12, 2)
+  brandId Int
+}
+
+model Brand {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(10)
+  Item Item[]
 }
