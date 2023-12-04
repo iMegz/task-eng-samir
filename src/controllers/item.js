@@ -1,10 +1,12 @@
+const { PrismaClient } = require("@prisma/client");
+
 exports.getItems = async (req, res, next) => {
   const page = req.query.p;
 
   const items = await req.db.item.findMany({
     take: 3,
     skip: (page - 1) * 3,
-    include: { brand: true },
+    include: { brand: { select: { name: true } } },
   });
 
   res.json(items);
