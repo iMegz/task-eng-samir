@@ -3,6 +3,9 @@ const { join } = require("path");
 const cors = require("cors");
 const express = require("express");
 const router = require("./src/routes");
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 const app = express();
 
@@ -14,6 +17,11 @@ app.use(express.json());
 
 // Serve react app
 app.use(express.static(join(__dirname, "public")));
+
+app.use((req, res, next) => {
+  req.db = prisma;
+  next();
+});
 
 app.use("/api", router);
 
